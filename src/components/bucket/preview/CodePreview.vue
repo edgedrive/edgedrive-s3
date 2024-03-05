@@ -12,7 +12,7 @@ import { computed } from 'vue'
 import hljs from 'highlight.js'
 
 const props = defineProps<{
-  object?: _Object
+  object: _Object
   blob: Blob
 }>()
 
