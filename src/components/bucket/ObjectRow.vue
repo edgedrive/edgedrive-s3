@@ -5,17 +5,21 @@
     </template>
     <n-text>{{ filename }}</n-text>
     <template #suffix>
-      <download-button :object="props.object" />
+      <n-flex :wrap="false">
+        <info-button :object="props.object" />
+        <download-button :object="props.object" />
+      </n-flex>
     </template>
   </n-list-item>
 </template>
 
 <script setup lang="ts">
 import { type _Object } from '@aws-sdk/client-s3'
-import { NListItem, NText } from 'naive-ui'
+import { NListItem, NText, NFlex } from 'naive-ui'
 import { computed } from 'vue'
 import DownloadButton from './DownloadButton.vue'
 import ObjectIcon from './ObjectIcon.vue'
+import InfoButton from './InfoButton.vue'
 
 const props = defineProps<{
   object: _Object

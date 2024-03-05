@@ -6,6 +6,7 @@
       :directorys="directorys"
       @update:prefix="prefix = $event"
     />
+    <InfoModal v-model:show="infoModalShow" :object="infoModalObject" />
   </div>
 </template>
 
@@ -14,12 +15,15 @@ import { S3Client, ListObjectsV2Command, type _Object } from '@aws-sdk/client-s3
 import { onMounted, computed, ref, watch } from 'vue'
 import DirectoryAndObjectRows from './DirectoryAndObjectRows.vue'
 import PrefixBreadcrumb from './PrefixBreadcrumb.vue'
+import InfoModal from './InfoModal.vue'
 import { provide, toRef } from 'vue'
 
 const prefix = ref('src/')
 
 const objects = ref<_Object[]>([])
 const directorys = ref<string[]>([])
+const infoModalObject = ref<_Object | undefined>()
+const infoModalShow = ref(false)
 
 const props = defineProps<{
   endpoint: string
@@ -42,6 +46,8 @@ const client = computed(() => {
 
 provide('client', client)
 provide('bucket', bucket)
+provide('infoModalObject', infoModalObject)
+provide('infoModalShow', infoModalShow)
 
 async function updateObjects() {
   const command = new ListObjectsV2Command({
