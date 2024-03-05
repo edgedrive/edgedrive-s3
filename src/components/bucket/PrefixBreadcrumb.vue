@@ -3,7 +3,7 @@
     <n-breadcrumb-item @click="emit('update:prefix', '')"> @ </n-breadcrumb-item>
 
     <n-breadcrumb-item v-for="part in parts" :key="part" @click="emit('update:prefix', part)">
-      {{ part.split('/').pop() }}
+      {{ part.replace(/\/$/, '').split('/').pop() }}
     </n-breadcrumb-item>
   </n-breadcrumb>
 </template>
@@ -19,14 +19,11 @@ const props = defineProps<{
 const emit = defineEmits(['update:prefix'])
 
 const parts = computed(() => {
-  // src/a/b/c/d
-  // return ['src', 'src/a', 'src/a/b', 'src/a/b/c', 'src/a/b/c/d']
-
-  const prefix = props.prefix.endsWith('/') ? props.prefix.slice(0, -1) : props.prefix
-
-  const parts = prefix.split('/')
+  // prefix is src/a/b/c/d/
+  // return src/ src/a/ src/a/b/ src/a/b/c/ src/a/b/c/d/
+  const parts = props.prefix.split('/')
   return parts.map((part, index) => {
-    return parts.slice(0, index + 1).join('/')
+    return parts.slice(0, index + 1).join('/') + '/'
   })
 })
 </script>
