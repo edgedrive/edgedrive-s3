@@ -4,6 +4,9 @@
       <n-icon :component="icon"> </n-icon>
     </template>
     <n-text>{{ filename }}</n-text>
+    <template #suffix>
+      <download-button :object="props.object" />
+    </template>
   </n-list-item>
 </template>
 
@@ -12,6 +15,7 @@ import { type _Object } from '@aws-sdk/client-s3'
 import { NListItem, NText, NIcon } from 'naive-ui'
 import { computed } from 'vue'
 import { Document16Regular, Image16Regular, Code16Regular } from '@vicons/fluent'
+import DownloadButton from './DownloadButton.vue'
 
 const props = defineProps<{
   object: _Object

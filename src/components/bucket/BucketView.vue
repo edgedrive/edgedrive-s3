@@ -14,6 +14,7 @@ import { S3Client, ListObjectsV2Command, type _Object } from '@aws-sdk/client-s3
 import { onMounted, computed, ref, watch } from 'vue'
 import DirectoryAndObjectRows from './DirectoryAndObjectRows.vue'
 import PrefixBreadcrumb from './PrefixBreadcrumb.vue'
+import { provide, toRef } from 'vue'
 
 const prefix = ref('src/')
 
@@ -26,6 +27,7 @@ const props = defineProps<{
   secretAccessKey: string
   bucket: string
 }>()
+const bucket = toRef(props, 'bucket')
 
 const client = computed(() => {
   return new S3Client({
@@ -37,6 +39,9 @@ const client = computed(() => {
     region: 'auto'
   })
 })
+
+provide('client', client)
+provide('bucket', bucket)
 
 async function updateObjects() {
   const command = new ListObjectsV2Command({
