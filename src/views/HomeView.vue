@@ -2,7 +2,7 @@
 import ConfigInput from '@/components/config/ConfigInput.vue'
 import StorageSelect from '@/components/storage/StorageSelect.vue'
 import BucketSelect from '@/components/bucket/BucketSelect.vue'
-import ObjectsList from '@/components/bucket/ObjectsList.vue'
+import BucketView from '@/components/bucket/BucketView.vue'
 import { useConfigStore } from '@/stores/config'
 import { ref, computed } from 'vue'
 import { NCollapse, NCollapseItem, NP } from 'naive-ui'
@@ -32,7 +32,7 @@ const buckets = computed(() => {
 
     <StorageSelect v-model:storageID="storageID" :storages="configStore.config.storages" />
     <BucketSelect v-model:bucket="bucket" :buckets="buckets" />
-    <ObjectsList
+    <BucketView
       v-if="bucket && selectedConfig"
       :endpoint="selectedConfig?.endpoint"
       :accessKeyId="selectedConfig?.accessKeyId"
