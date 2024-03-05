@@ -17,6 +17,9 @@ dependencies:
   '@vueuse/core':
     specifier: ^10.9.0
     version: 10.9.0(vue@3.4.21)
+  highlight.js:
+    specifier: ^11.9.0
+    version: 11.9.0
   naive-ui:
     specifier: ^2.38.1
     version: 2.38.1(vue@3.4.21)

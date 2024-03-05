@@ -1,5 +1,5 @@
 <template>
-  <n-list-item>
+  <n-list-item @click="showPreview">
     <template #prefix>
       <ObjectIcon :object="object" />
     </template>
@@ -16,7 +16,7 @@
 <script setup lang="ts">
 import { type _Object } from '@aws-sdk/client-s3'
 import { NListItem, NText, NFlex } from 'naive-ui'
-import { computed } from 'vue'
+import { computed, inject, type Ref } from 'vue'
 import DownloadButton from './DownloadButton.vue'
 import ObjectIcon from './ObjectIcon.vue'
 import InfoButton from './InfoButton.vue'
@@ -28,4 +28,12 @@ const props = defineProps<{
 const filename = computed(() => {
   return props.object?.Key?.split('/')?.pop() ?? ''
 })
+
+const previewModalObject = inject('previewModalObject') as Ref<_Object | undefined>
+const previewModalShow = inject('previewModalShow') as Ref<boolean>
+
+const showPreview = () => {
+  previewModalObject.value = props.object
+  previewModalShow.value = true
+}
 </script>

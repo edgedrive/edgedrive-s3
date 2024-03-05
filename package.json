@@ -17,6 +17,7 @@
     "@aws-sdk/s3-request-presigner": "^3.525.0",
     "@vicons/fluent": "^0.12.0",
     "@vueuse/core": "^10.9.0",
+    "highlight.js": "^11.9.0",
     "naive-ui": "^2.38.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.15",
