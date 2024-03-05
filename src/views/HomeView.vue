@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import ConfigInput from '@/components/config/ConfigInput.vue'
+</script>
 
 <template>
-  <main></main>
+  <main style="padding: 3em">
+    <ConfigInput />
+  </main>
 </template>
