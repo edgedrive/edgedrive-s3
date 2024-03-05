@@ -1,5 +1,5 @@
 <template>
-  <n-button quaternary circle @click="download">
+  <n-button quaternary circle @click.stop.prevent="download">
     <template #icon>
       <n-icon><ArrowDownload16Regular /></n-icon>
     </template>

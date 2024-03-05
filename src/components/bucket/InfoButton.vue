@@ -1,5 +1,5 @@
 <template>
-  <n-button quaternary circle @click="showInfo">
+  <n-button quaternary circle @click.stop.prevent="showInfo">
     <template #icon>
       <n-icon><Info16Regular /></n-icon>
     </template>
