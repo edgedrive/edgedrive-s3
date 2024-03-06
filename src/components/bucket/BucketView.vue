@@ -1,5 +1,6 @@
 <template>
   <div>
+    <UploadButton :prefix="prefix" />
     <PrefixBreadcrumb v-model:prefix="prefix" />
     <DirectoryAndObjectRows
       :objects="objects"
@@ -19,6 +20,7 @@ import PrefixBreadcrumb from './PrefixBreadcrumb.vue'
 import InfoModal from './InfoModal.vue'
 import ObjectPreviewModal from './preview/ObjectPreviewModal.vue'
 import { provide, toRef } from 'vue'
+import UploadButton from './upload/UploadButton.vue'
 
 const prefix = ref('src/')
 
