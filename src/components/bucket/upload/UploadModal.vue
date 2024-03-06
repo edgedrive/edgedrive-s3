@@ -73,6 +73,10 @@ function handleUploadChange(data: { fileList: UploadFileInfo[] }) {
 
 // FIXME: use customRequest to do upload
 async function startUpload(file: UploadFileInfo) {
+  if (!client || !bucket || !file || !file.fullPath || !file.file) {
+    return
+  }
+
   console.log(file)
   file.status = 'uploading'
 
