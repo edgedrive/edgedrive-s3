@@ -24,7 +24,7 @@ import { provide, toRef } from 'vue'
 import UploadButton from './upload/UploadButton.vue'
 import RefreshButton from './refresh/RefreshButton.vue'
 
-const prefix = ref('src/')
+const prefix = ref('')
 
 const objects = ref<_Object[]>([])
 const directorys = ref<string[]>([])
