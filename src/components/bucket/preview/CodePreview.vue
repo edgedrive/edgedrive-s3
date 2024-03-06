@@ -16,8 +16,6 @@ const props = defineProps<{
   blob: Blob
 }>()
 
-console.log(hljs.listLanguages())
-
 const code = computedAsync(async () => props.blob.text())
 const ext = computed(() => props.object?.Key?.split('/').pop()?.split('.').pop() ?? '')
 </script>

@@ -72,8 +72,6 @@ const blob = computedAsync(
       new GetObjectCommand({ Bucket: bucket.value, Key: props.object.Key })
     )
 
-    console.log(response)
-
     return new Response(response.Body?.transformToWebStream()).blob()
   },
   null,

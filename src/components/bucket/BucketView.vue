@@ -66,7 +66,6 @@ async function updateObjects() {
     Delimiter: '/'
   })
   const response = await client.value.send(command)
-  console.log(response)
 
   if (response.Contents) {
     objects.value = response.Contents

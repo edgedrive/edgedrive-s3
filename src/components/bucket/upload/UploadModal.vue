@@ -77,7 +77,6 @@ async function startUpload(file: UploadFileInfo) {
     return
   }
 
-  console.log(file)
   file.status = 'uploading'
 
   // remove file.fullPath prefix /
@@ -96,6 +95,5 @@ async function startUpload(file: UploadFileInfo) {
   await client.value.send(command)
 
   file.status = 'finished'
-  console.log(file)
 }
 </script>
