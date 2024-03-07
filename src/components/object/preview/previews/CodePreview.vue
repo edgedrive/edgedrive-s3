@@ -13,9 +13,12 @@ import hljs from 'highlight.js'
 
 const props = defineProps<{
   object: _Object
-  blob: Blob
+  url: string
 }>()
 
-const code = computedAsync(async () => props.blob.text())
+const code = computedAsync(async () => {
+  const res = await fetch(props.url)
+  return res.text()
+})
 const ext = computed(() => props.object?.Key?.split('/').pop()?.split('.').pop() ?? '')
 </script>

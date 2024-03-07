@@ -8,19 +8,16 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue'
-import { useObjectUrl } from '@vueuse/core'
 import { VuePDF, usePDF } from '@tato30/vue-pdf'
 import { NButton } from 'naive-ui'
 import { ref } from 'vue'
 
 const props = defineProps<{
-  blob: Blob
+  url: string
 }>()
 
 const page = ref(1)
-const blob = toRef(props, 'blob')
-
-const url = useObjectUrl(blob)
+const url = toRef(props, 'url')
 
 const { pdf, pages } = usePDF(url.value)
 </script>
