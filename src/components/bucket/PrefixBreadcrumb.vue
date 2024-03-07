@@ -1,8 +1,20 @@
 <template>
   <n-breadcrumb>
     <n-breadcrumb-item @click="resetStorage"> @ </n-breadcrumb-item>
-    <n-breadcrumb-item @click="resetBucket" v-if="storage">{{ storage.name }}</n-breadcrumb-item>
-    <n-breadcrumb-item @click="prefix = ''" v-if="bucket">{{ bucket }}</n-breadcrumb-item>
+    <n-breadcrumb-item v-if="storage">
+      <n-dropdown :options="storageOptions" @select="handleStorageChange">
+        <span @click="resetBucket">
+          {{ storage.name }}
+        </span>
+      </n-dropdown>
+    </n-breadcrumb-item>
+    <n-breadcrumb-item v-if="bucket">
+      <n-dropdown :options="bucketOptions" @select="handleBucketChange">
+        <span @click="prefix = ''">
+          {{ bucket }}
+        </span>
+      </n-dropdown>
+    </n-breadcrumb-item>
 
     <n-breadcrumb-item v-for="part in parts" :key="part" @click="prefix = part">
       {{ part.replace(/\/$/, '').split('/').pop() }}
@@ -11,10 +23,13 @@
 </template>
 
 <script setup lang="ts">
-import { NBreadcrumb, NBreadcrumbItem } from 'naive-ui'
+import { NBreadcrumb, NBreadcrumbItem, NDropdown } from 'naive-ui'
 import { computed } from 'vue'
 import type { StorageConfig } from '@/stores/config'
 import { useVModels } from '@vueuse/core'
+import { useConfigStore } from '@/stores/config'
+
+const configStore = useConfigStore()
 
 const props = defineProps<{
   storage?: StorageConfig
@@ -35,13 +50,46 @@ const parts = computed(() => {
   })
 })
 
-const resetBucket = () => {
-  bucket.value = undefined
+const bucketOptions = computed(() => {
+  if (!storage.value) {
+    return []
+  } else {
+    return storage.value.buckets.map((bucket) => {
+      return {
+        label: bucket,
+        key: bucket
+      }
+    })
+  }
+})
+
+const handleBucketChange = (bucket: string) => {
+  emit('update:bucket', bucket)
   prefix.value = ''
+}
+
+const storageOptions = computed(() => {
+  return configStore.config?.storages.map((storage) => {
+    return {
+      label: storage.name,
+      key: storage.id
+    }
+  })
+})
+
+const handleStorageChange = (storageID: string) => {
+  storage.value = configStore.config?.storages.find((storage) => storage.id === storageID)
+  resetBucket()
 }
 
 const resetStorage = () => {
   storage.value = undefined
-  resetBucket()
+  bucket.value = undefined
+  prefix.value = ''
+}
+
+const resetBucket = () => {
+  bucket.value = undefined
+  prefix.value = ''
 }
 </script>
