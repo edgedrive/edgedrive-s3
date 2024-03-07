@@ -41,9 +41,9 @@
 </template>
 
 <script setup lang="ts">
-import { type _Object, type S3Client, HeadObjectCommand } from '@aws-sdk/client-s3'
-import { inject, type Ref, ref } from 'vue'
-import { useVModel, computedAsync } from '@vueuse/core'
+import { type _Object, type S3Client } from '@aws-sdk/client-s3'
+import { inject, type Ref } from 'vue'
+import { useVModel } from '@vueuse/core'
 import {
   NModal,
   NCard,
@@ -54,6 +54,7 @@ import {
   NSkeleton
 } from 'naive-ui'
 import { useNow } from '@vueuse/core'
+import { useObjectHead } from '@/composables/s3/use-object-head'
 
 const props = defineProps<{
   object?: _Object
@@ -65,23 +66,8 @@ const emit = defineEmits(['update:show'])
 
 const show = useVModel(props, 'show', emit)
 
-const client = inject<Ref<S3Client>>('client')
-const bucket = inject<Ref<string>>('bucket')
-const evaluating = ref(false)
+const client = inject<Ref<S3Client>>('client') as Ref<S3Client>
+const bucket = inject<Ref<string>>('bucket') as Ref<string>
 
-const objectInfo = computedAsync(
-  async () => {
-    if (!client?.value || !bucket?.value || !props.object) {
-      return
-    }
-
-    const response = await client.value.send(
-      new HeadObjectCommand({ Bucket: bucket.value, Key: props.object.Key })
-    )
-
-    return response
-  },
-  null,
-  { evaluating }
-)
+const { head: objectInfo, evaluating } = useObjectHead(client, bucket, props.object)
 </script>
