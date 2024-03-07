@@ -6,7 +6,7 @@
       :key="storage.id"
     >
       <template #prefix>
-        <n-icon><Database20Regular /></n-icon>
+        <n-icon><Storage24Regular /></n-icon>
       </template>
       <n-text>{{ storage.name }}</n-text>
     </n-list-item>
@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { NList, NListItem, NIcon } from 'naive-ui'
-import { Database20Regular } from '@vicons/fluent'
+import { Storage24Regular } from '@vicons/fluent'
 import { useConfigStore } from '@/stores/config'
 import { computed } from 'vue'
 
