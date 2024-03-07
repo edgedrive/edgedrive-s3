@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ConfigInput from '@/components/config/ConfigInput.vue'
 import StorageSelect from '@/components/storage/StorageSelect.vue'
-import BucketSelect from '@/components/bucket/BucketSelect.vue'
 import { useConfigStore, type StorageConfig } from '@/stores/config'
 import { ref, computed } from 'vue'
 import { NCollapse, NCollapseItem, NP } from 'naive-ui'
@@ -28,7 +27,6 @@ const buckets = computed(() => {
     </n-p>
 
     <StorageSelect v-model:storage="storage" :storages="configStore.config.storages" />
-    <BucketSelect v-model:bucket="bucket" :buckets="buckets" />
     <FileView v-model:storage="storage" v-model:bucket="bucket" />
   </main>
 </template>

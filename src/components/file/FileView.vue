@@ -1,7 +1,7 @@
 <template>
   <div>
     <PathBreadcrumb v-model:prefix="prefix" v-model:bucket="bucket" v-model:storage="storage" />
-    <BucketView
+    <ObjectsView
       :storage="storage"
       :bucket="bucket"
       v-model:prefix="prefix"
@@ -15,7 +15,7 @@ import { ref } from 'vue'
 import PathBreadcrumb from './PathBreadcrumb.vue'
 import type { StorageConfig } from '@/stores/config'
 import { useVModels } from '@vueuse/core'
-import BucketView from '@/components/bucket/BucketView.vue'
+import ObjectsView from '@/components/object/ObjectsView.vue'
 
 const prefix = ref('')
 
