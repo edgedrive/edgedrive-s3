@@ -42,7 +42,8 @@ const previewComponent = computed<Component>(() => {
     contentType.includes('text') ||
     contentType.includes('json') ||
     contentType.includes('xml') ||
-    contentType.includes('yaml')
+    contentType.includes('yaml') ||
+    object.value?.Key?.endsWith('.ts')
   ) {
     return defineAsyncComponent(() => import('./previews/CodePreview.vue'))
   }
