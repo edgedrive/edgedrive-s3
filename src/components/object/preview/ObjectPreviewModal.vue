@@ -28,8 +28,8 @@ import { NModal, NCard } from 'naive-ui'
 import DownloadButton from '../DownloadButton.vue'
 import { inject, type Ref, ref } from 'vue'
 
-import CodePreview from './CodePreview.vue'
-import ImagePreview from './ImagePreview.vue'
+import CodePreview from './previews/CodePreview.vue'
+import ImagePreview from './previews/ImagePreview.vue'
 
 const props = defineProps<{
   object?: _Object
@@ -78,3 +78,4 @@ const blob = computedAsync(
   { evaluating }
 )
 </script>
+./previews/CodePreview.vue
