@@ -2,7 +2,6 @@
   <div>
     <UploadButton :prefix="prefix" />
     <RefreshButton @click="updateObjects" />
-    <PrefixBreadcrumb v-model:prefix="prefix" v-model:bucket="bucket" v-model:storage="storage" />
     <DirectoryAndObjectRows
       :objects="objects"
       :directorys="directorys"
@@ -17,7 +16,6 @@
 import { S3Client, ListObjectsV2Command, type _Object } from '@aws-sdk/client-s3'
 import { onMounted, computed, ref, watch } from 'vue'
 import DirectoryAndObjectRows from './DirectoryAndObjectRows.vue'
-import PrefixBreadcrumb from './PrefixBreadcrumb.vue'
 import InfoModal from './InfoModal.vue'
 import ObjectPreviewModal from './preview/ObjectPreviewModal.vue'
 import { provide } from 'vue'
@@ -25,8 +23,7 @@ import UploadButton from './upload/UploadButton.vue'
 import RefreshButton from './refresh/RefreshButton.vue'
 import type { StorageConfig } from '@/stores/config'
 import { useVModels } from '@vueuse/core'
-
-const prefix = ref('')
+import { toRef } from 'vue'
 
 const objects = ref<_Object[]>([])
 const directorys = ref<string[]>([])
@@ -36,17 +33,15 @@ const previewModalObject = ref<_Object | undefined>()
 const previewModalShow = ref(false)
 
 const props = defineProps<{
-  storage?: StorageConfig
-  bucket?: string
+  storage: StorageConfig
+  bucket: string
+  prefix: string
 }>()
-const emit = defineEmits(['update:bucket', 'update:storage'])
-const { storage, bucket } = useVModels(props, emit)
+const emit = defineEmits(['update:prefix'])
+const { prefix } = useVModels(props, emit)
+const bucket = toRef(props, 'bucket')
 
 const client = computed(() => {
-  if (!props.storage) {
-    return undefined
-  }
-
   return new S3Client({
     endpoint: props.storage.endpoint,
     credentials: {
@@ -65,10 +60,6 @@ provide('previewModalObject', previewModalObject)
 provide('previewModalShow', previewModalShow)
 
 async function updateObjects() {
-  if (!client.value || !props.bucket) {
-    return
-  }
-
   const command = new ListObjectsV2Command({
     Bucket: props.bucket,
     Prefix: prefix.value,
