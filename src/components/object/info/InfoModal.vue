@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import { type _Object, type S3Client } from '@aws-sdk/client-s3'
-import { inject, type Ref } from 'vue'
+import { inject, type Ref, toRef } from 'vue'
 import { useVModel } from '@vueuse/core'
 import {
   NModal,
@@ -68,6 +68,7 @@ const show = useVModel(props, 'show', emit)
 
 const client = inject<Ref<S3Client>>('client') as Ref<S3Client>
 const bucket = inject<Ref<string>>('bucket') as Ref<string>
+const object = toRef(props, 'object')
 
-const { head: objectInfo, evaluating } = useObjectHead(client, bucket, props.object)
+const { head: objectInfo, evaluating } = useObjectHead(client, bucket, object)
 </script>
