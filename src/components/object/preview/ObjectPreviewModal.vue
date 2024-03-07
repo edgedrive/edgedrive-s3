@@ -5,7 +5,7 @@
         <DownloadButton :object="object" v-if="object" />
       </template>
       <template v-if="url && !evaluating && object && !infoEvaluating">
-        <component :is="previewComponent" :url="url" :object="object" />
+        <component :is="previewComponent" :url="url" :object="object" :head="objectInfo" />
       </template>
     </n-card>
   </n-modal>
@@ -49,6 +49,10 @@ const previewComponent = computed<Component>(() => {
 
   if (contentType.includes('image')) {
     return defineAsyncComponent(() => import('./previews/ImagePreview.vue'))
+  }
+
+  if (contentType.includes('video')) {
+    return defineAsyncComponent(() => import('./previews/VideoPreview.vue'))
   }
 
   if (contentType.includes('pdf')) {
