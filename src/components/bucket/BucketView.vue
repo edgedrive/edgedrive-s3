@@ -2,7 +2,7 @@
   <div>
     <UploadButton :prefix="prefix" />
     <RefreshButton @click="updateObjects" />
-    <PrefixBreadcrumb v-model:prefix="prefix" />
+    <PrefixBreadcrumb v-model:prefix="prefix" v-model:bucket="bucket" v-model:storage="storage" />
     <DirectoryAndObjectRows
       :objects="objects"
       :directorys="directorys"
@@ -20,9 +20,11 @@ import DirectoryAndObjectRows from './DirectoryAndObjectRows.vue'
 import PrefixBreadcrumb from './PrefixBreadcrumb.vue'
 import InfoModal from './InfoModal.vue'
 import ObjectPreviewModal from './preview/ObjectPreviewModal.vue'
-import { provide, toRef } from 'vue'
+import { provide } from 'vue'
 import UploadButton from './upload/UploadButton.vue'
 import RefreshButton from './refresh/RefreshButton.vue'
+import type { StorageConfig } from '@/stores/config'
+import { useVModels } from '@vueuse/core'
 
 const prefix = ref('')
 
@@ -34,19 +36,22 @@ const previewModalObject = ref<_Object | undefined>()
 const previewModalShow = ref(false)
 
 const props = defineProps<{
-  endpoint: string
-  accessKeyId: string
-  secretAccessKey: string
-  bucket: string
+  storage?: StorageConfig
+  bucket?: string
 }>()
-const bucket = toRef(props, 'bucket')
+const emit = defineEmits(['update:bucket', 'update:storage'])
+const { storage, bucket } = useVModels(props, emit)
 
 const client = computed(() => {
+  if (!props.storage) {
+    return undefined
+  }
+
   return new S3Client({
-    endpoint: props.endpoint,
+    endpoint: props.storage.endpoint,
     credentials: {
-      accessKeyId: props.accessKeyId,
-      secretAccessKey: props.secretAccessKey
+      accessKeyId: props.storage.accessKeyId,
+      secretAccessKey: props.storage.secretAccessKey
     },
     region: 'auto'
   })
@@ -60,6 +65,10 @@ provide('previewModalObject', previewModalObject)
 provide('previewModalShow', previewModalShow)
 
 async function updateObjects() {
+  if (!client.value || !props.bucket) {
+    return
+  }
+
   const command = new ListObjectsV2Command({
     Bucket: props.bucket,
     Prefix: prefix.value,

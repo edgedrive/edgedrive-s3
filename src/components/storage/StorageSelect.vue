@@ -7,17 +7,27 @@
 <script setup lang="ts">
 import { NSelect, NFormItem } from 'naive-ui'
 import type { StorageConfig } from '@/stores/config'
-import { useVModel } from '@vueuse/core'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 const props = defineProps<{
-  storageID?: string
+  storage?: StorageConfig
   storages: StorageConfig[]
 }>()
 
-const emit = defineEmits(['update:storageID'])
+const storage = toRef(props, 'storage')
 
-const storageID = useVModel(props, 'storageID', emit)
+const emit = defineEmits(['update:storage'])
+const storageID = computed({
+  get() {
+    return storage.value?.id
+  },
+  set: (id: string | undefined) => {
+    emit(
+      'update:storage',
+      props.storages.find((storage) => storage.id === id)
+    )
+  }
+})
 
 const options = computed(() => {
   return props.storages.map((storage) => {
