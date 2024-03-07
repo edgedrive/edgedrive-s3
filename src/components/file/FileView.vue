@@ -19,7 +19,7 @@ import type { StorageConfig } from '@/stores/config'
 import { useVModels } from '@vueuse/core'
 import ObjectsView from '@/components/object/ObjectsView.vue'
 import BucketsView from '@/components/storage/BucketsView.vue'
-import StoragesView from "./StoragesView.vue"
+import StoragesView from './StoragesView.vue'
 
 const prefix = ref('')
 
