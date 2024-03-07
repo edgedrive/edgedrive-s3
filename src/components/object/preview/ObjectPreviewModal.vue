@@ -4,13 +4,8 @@
       <template #header-extra>
         <DownloadButton :object="object" v-if="object" />
       </template>
-      <template v-if="url && !evaluating && object">
-        <CodePreview :url="url" :object="object" v-if="objectInfo?.ContentType?.includes('text') ||
-          objectInfo?.ContentType?.includes('json') ||
-          objectInfo?.ContentType?.includes('xml') ||
-          objectInfo?.ContentType?.includes('yaml')" />
-        <ImagePreview :url="url" v-if="objectInfo?.ContentType?.includes('image')" />
-        <PDFPreview :url="url" v-if="objectInfo?.ContentType?.includes('pdf')" />
+      <template v-if="url && !evaluating && object && !infoEvaluating">
+        <component :is="previewComponent" :url="url" :object="object" />
       </template>
     </n-card>
   </n-modal>
@@ -21,13 +16,9 @@ import { type _Object, type S3Client } from '@aws-sdk/client-s3'
 import { useVModel } from '@vueuse/core'
 import { NModal, NCard } from 'naive-ui'
 import DownloadButton from '../download/DownloadButton.vue'
-import { inject, type Ref, toRef } from 'vue'
+import { inject, type Ref, toRef, computed, defineAsyncComponent, type Component } from 'vue'
 import { useObjectHead } from '@/composables/s3/use-object-head'
 import { useObjectPresignedUrl } from '@/composables/s3/use-object-presigned-url'
-
-import CodePreview from './previews/CodePreview.vue'
-import ImagePreview from './previews/ImagePreview.vue'
-import PDFPreview from './previews/PDFPreview.vue'
 
 const props = defineProps<{
   object?: _Object
@@ -42,6 +33,28 @@ const client = inject<Ref<S3Client>>('client') as Ref<S3Client>
 const bucket = inject<Ref<string>>('bucket') as Ref<string>
 const object = toRef(props, 'object')
 
-const { head: objectInfo } = useObjectHead(client, bucket, object)
+const { head: objectInfo, evaluating: infoEvaluating } = useObjectHead(client, bucket, object)
 const { url, evaluating } = useObjectPresignedUrl(client, bucket, object, 3600)
+
+const previewComponent = computed<Component>(() => {
+  const contentType = objectInfo?.value?.ContentType ?? ''
+  if (
+    contentType.includes('text') ||
+    contentType.includes('json') ||
+    contentType.includes('xml') ||
+    contentType.includes('yaml')
+  ) {
+    return defineAsyncComponent(() => import('./previews/CodePreview.vue'))
+  }
+
+  if (contentType.includes('image')) {
+    return defineAsyncComponent(() => import('./previews/ImagePreview.vue'))
+  }
+
+  if (contentType.includes('pdf')) {
+    return defineAsyncComponent(() => import('./previews/PDFPreview.vue'))
+  }
+
+  return defineAsyncComponent(() => import('./previews/UnknownPreview.vue'))
+})
 </script>
