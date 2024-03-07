@@ -17,9 +17,9 @@
 import { type _Object } from '@aws-sdk/client-s3'
 import { NListItem, NText, NFlex } from 'naive-ui'
 import { computed, inject, type Ref } from 'vue'
-import DownloadButton from './DownloadButton.vue'
+import DownloadButton from '../download/DownloadButton.vue'
 import ObjectIcon from './ObjectIcon.vue'
-import InfoButton from './InfoButton.vue'
+import InfoButton from '../info/InfoButton.vue'
 
 const props = defineProps<{
   object: _Object

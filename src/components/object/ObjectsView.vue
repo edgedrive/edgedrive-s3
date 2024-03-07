@@ -15,8 +15,8 @@
 <script setup lang="ts">
 import { S3Client, ListObjectsV2Command, type _Object } from '@aws-sdk/client-s3'
 import { onMounted, computed, ref, watch } from 'vue'
-import DirectoryAndObjectRows from './DirectoryAndObjectRows.vue'
-import InfoModal from './InfoModal.vue'
+import DirectoryAndObjectRows from './list/DirectoryAndObjectRows.vue'
+import InfoModal from './info/InfoModal.vue'
 import ObjectPreviewModal from './preview/ObjectPreviewModal.vue'
 import { provide } from 'vue'
 import UploadButton from './upload/UploadButton.vue'

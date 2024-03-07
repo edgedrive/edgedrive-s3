@@ -1,5 +1,5 @@
 <template>
-  <n-modal v-model:show="show" style="max-width: calc(100vw - 4em); max-height: calc(100vh - 4em);">
+  <n-modal v-model:show="show" style="max-width: calc(100vw - 4em); max-height: calc(100vh - 4em)">
     <n-card :title="object?.Key">
       <template #header-extra>
         <DownloadButton :object="object" v-if="object" />
@@ -26,7 +26,7 @@ import {
 } from '@aws-sdk/client-s3'
 import { useVModel, computedAsync } from '@vueuse/core'
 import { NModal, NCard } from 'naive-ui'
-import DownloadButton from '../DownloadButton.vue'
+import DownloadButton from '../download/DownloadButton.vue'
 import { inject, type Ref, ref } from 'vue'
 
 import CodePreview from './previews/CodePreview.vue'
@@ -80,4 +80,3 @@ const blob = computedAsync(
   { evaluating }
 )
 </script>
-./previews/CodePreview.vue
