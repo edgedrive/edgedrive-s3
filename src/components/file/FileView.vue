@@ -1,6 +1,7 @@
 <template>
   <div>
     <PathBreadcrumb v-model:prefix="prefix" v-model:bucket="bucket" v-model:storage="storage" />
+    <StoragesView @update:storage="storage = $event" v-if="!storage" />
     <BucketsView :storage="storage" @update:bucket="bucket = $event" v-if="storage && !bucket" />
     <ObjectsView
       :storage="storage"
@@ -18,6 +19,7 @@ import type { StorageConfig } from '@/stores/config'
 import { useVModels } from '@vueuse/core'
 import ObjectsView from '@/components/object/ObjectsView.vue'
 import BucketsView from '@/components/storage/BucketsView.vue'
+import StoragesView from "./StoragesView.vue"
 
 const prefix = ref('')
 
