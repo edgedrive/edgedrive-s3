@@ -38,6 +38,10 @@ const { url, evaluating } = useObjectPresignedUrl(client, bucket, object, 3600)
 
 const previewComponent = computed<Component>(() => {
   const contentType = objectInfo?.value?.ContentType ?? ''
+  if (contentType.includes('officedocument')) {
+    return defineAsyncComponent(() => import('./previews/OfficePreview.vue'))
+  }
+
   if (
     contentType.includes('text') ||
     contentType.includes('json') ||
