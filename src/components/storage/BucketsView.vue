@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { NList, NListItem, NIcon } from 'naive-ui'
+import { NList, NListItem, NIcon, NText } from 'naive-ui'
 import type { StorageConfig } from '@/stores/config'
 import { Database20Regular } from '@vicons/fluent'
 
