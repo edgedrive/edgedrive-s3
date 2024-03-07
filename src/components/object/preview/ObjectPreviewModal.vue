@@ -1,5 +1,5 @@
 <template>
-  <n-modal v-model:show="show" style="max-width: calc(100vw - 4em)">
+  <n-modal v-model:show="show" style="max-width: calc(100vw - 4em); max-height: calc(100vh - 4em);">
     <n-card :title="object?.Key">
       <template #header-extra>
         <DownloadButton :object="object" v-if="object" />
@@ -11,6 +11,7 @@
           v-if="objectInfo?.ContentType?.includes('text')"
         />
         <ImagePreview :blob="blob" v-if="objectInfo?.ContentType?.includes('image')" />
+        <PDFPreview :blob="blob" v-if="objectInfo?.ContentType?.includes('pdf')" />
       </template>
     </n-card>
   </n-modal>
@@ -30,6 +31,7 @@ import { inject, type Ref, ref } from 'vue'
 
 import CodePreview from './previews/CodePreview.vue'
 import ImagePreview from './previews/ImagePreview.vue'
+import PDFPreview from './previews/PDFPreview.vue'
 
 const props = defineProps<{
   object?: _Object
