@@ -6,8 +6,7 @@
     <n-text>{{ filename }}</n-text>
     <template #suffix>
       <n-flex :wrap="false">
-        <info-button :object="props.object" />
-        <download-button :object="props.object" />
+        <span style="white-space: nowrap;">{{ filesizeFormatted }}</span>
       </n-flex>
     </template>
   </n-list-item>
@@ -17,9 +16,8 @@
 import { type _Object } from '@aws-sdk/client-s3'
 import { NListItem, NText, NFlex } from 'naive-ui'
 import { computed, inject, type Ref } from 'vue'
-import DownloadButton from '../download/DownloadButton.vue'
 import ObjectIcon from './ObjectIcon.vue'
-import InfoButton from '../info/InfoButton.vue'
+import { filesize } from 'filesize'
 
 const props = defineProps<{
   object: _Object
@@ -36,4 +34,10 @@ const showPreview = () => {
   previewModalObject.value = props.object
   previewModalShow.value = true
 }
+
+const filesizeFormatted = computed(() => {
+  return filesize(props.object.Size ?? 0, {
+    round: 1
+  })
+})
 </script>
