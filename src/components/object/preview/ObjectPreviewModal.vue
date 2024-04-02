@@ -1,6 +1,6 @@
 <template>
   <n-modal v-model:show="show" style="max-width: calc(100vw - 4em); max-height: calc(100vh - 4em)">
-    <n-card :title="object?.Key">
+    <n-card :title="object?.Key" content-style="overflow: auto;">
       <template #header-extra>
         <DownloadButton :object="object" v-if="object" />
       </template>
