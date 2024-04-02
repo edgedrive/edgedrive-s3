@@ -1,6 +1,10 @@
 <template>
   <n-breadcrumb>
-    <n-breadcrumb-item @click="resetStorage"> @ </n-breadcrumb-item>
+    <n-breadcrumb-item @click="resetStorage">
+    <n-icon>
+      <Home16Regular />
+    </n-icon>
+    </n-breadcrumb-item>
     <n-breadcrumb-item v-if="storage">
       <n-dropdown :options="storageOptions" @select="handleStorageChange">
         <span @click="resetBucket">
@@ -23,11 +27,12 @@
 </template>
 
 <script setup lang="ts">
-import { NBreadcrumb, NBreadcrumbItem, NDropdown } from 'naive-ui'
+import { NBreadcrumb, NBreadcrumbItem, NDropdown, NIcon } from 'naive-ui'
 import { computed } from 'vue'
 import type { StorageConfig } from '@/stores/config'
 import { useVModels } from '@vueuse/core'
 import { useConfigStore } from '@/stores/config'
+import { Home16Regular } from '@vicons/fluent'
 
 const configStore = useConfigStore()
 
