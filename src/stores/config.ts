@@ -25,6 +25,17 @@ export const useConfigStore = defineStore({
   }),
   actions: {
     addStorage() {
+      const defaultStorageConfig: StorageConfig = {
+        id: crypto.randomUUID(),
+        name: 'Storage',
+        endpoint: '',
+        buckets: [],
+        accessKeyId: '',
+        secretAccessKey: ''
+      }
+
+      defaultStorageConfig.name = `Storage ${this.config.storages.length + 1}`
+
       this.config.storages.push(defaultStorageConfig)
     },
     removeStorage(id: string) {
@@ -36,11 +47,3 @@ export const useConfigStore = defineStore({
   }
 })
 
-const defaultStorageConfig: StorageConfig = {
-  id: crypto.randomUUID(),
-  name: 'Storage',
-  endpoint: '',
-  buckets: [],
-  accessKeyId: '',
-  secretAccessKey: ''
-}
