@@ -15,19 +15,18 @@
     <n-form-item label="Bucket">
       <n-dynamic-tags v-model:value="config.buckets" />
     </n-form-item>
-    <n-button @click="emit('remove')">Remove Storage</n-button>
   </n-p>
 </template>
 
 <script setup lang="ts">
 import type { StorageConfig } from '@/stores/config'
 import { useVModel } from '@vueuse/core'
-import { NInput, NButton, NFormItem, NDynamicTags, NP } from 'naive-ui'
+import { NInput, NFormItem, NDynamicTags, NP } from 'naive-ui'
 
 const props = defineProps<{
   config: StorageConfig
 }>()
-const emit = defineEmits(['update:config', 'remove'])
+const emit = defineEmits(['update:config'])
 
 const config = useVModel(props, 'config', emit)
 </script>

@@ -1,24 +1,42 @@
 <script setup lang="ts">
 import { useConfigStore } from '@/stores/config'
 import StorageConfigInput from './StorageConfigInput.vue'
-import { NButton, NP } from 'naive-ui'
+import { NButton, NP, NH2, NCollapse, NCollapseItem, NIcon } from 'naive-ui'
+import { Delete16Regular, AddCircle16Regular } from '@vicons/fluent'
 
 const configStore = useConfigStore()
 </script>
 
 <template>
   <div>
+    <n-h2> Storages </n-h2>
     <n-p>
-      <StorageConfigInput
-        :config="config"
-        v-for="config in configStore.config.storages"
-        :key="config.id"
-        @remove="configStore.removeStorage(config.id)"
-      />
+      <n-collapse>
+        <n-collapse-item
+          :title="config.name"
+          :name="config.id"
+          v-for="config in configStore.config.storages"
+          :key="config.id"
+        >
+          <StorageConfigInput :config="config" />
+          <template #header-extra>
+            <n-button text @click="configStore.removeStorage(config.id)">
+              <template #icon>
+                <n-icon><Delete16Regular /></n-icon>
+              </template>
+            </n-button>
+          </template>
+        </n-collapse-item>
+      </n-collapse>
     </n-p>
 
     <n-p>
-      <n-button type="primary" @click="configStore.addStorage"> Add Storage Config </n-button>
+      <n-button text @click="configStore.addStorage">
+        <template #icon>
+          <n-icon><AddCircle16Regular /></n-icon>
+        </template>
+        Add Storage
+      </n-button>
     </n-p>
   </div>
 </template>

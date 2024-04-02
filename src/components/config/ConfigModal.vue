@@ -1,6 +1,6 @@
 <template>
   <n-modal v-model:show="configStore.showConfigModal">
-    <n-card style="max-width: 90vw; max-height: 90vh; overflow: auto" title="Config">
+    <n-card style="max-width: 90vw; max-height: 90vh; overflow: auto">
       <ConfigInput />
     </n-card>
   </n-modal>
