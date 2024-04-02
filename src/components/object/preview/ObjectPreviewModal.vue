@@ -37,8 +37,69 @@ const { head: objectInfo, evaluating: infoEvaluating } = useObjectHead(client, b
 const { url, evaluating } = useObjectPresignedUrl(client, bucket, object, 3600)
 
 const previewComponent = computed<Component>(() => {
-  if (object.value?.Key?.toLowerCase()?.endsWith('.epub')) {
+  // check extensions
+  const keyLowered = object.value?.Key?.toLowerCase() ?? ''
+
+  if (keyLowered.endsWith('.epub')) {
     return defineAsyncComponent(() => import('./previews/EPUBPreview.vue'))
+  }
+
+  const officeExtensions = ['.doc', '.docx', '.xls', '.xlsx', '.ppt', '.pptx']
+  if (officeExtensions.some((ext) => keyLowered.endsWith(ext))) {
+    return defineAsyncComponent(() => import('./previews/OfficePreview.vue'))
+  }
+
+  const codeExtensions = [
+    '.ts',
+    '.js',
+    '.json',
+    '.xml',
+    '.yaml',
+    '.yml',
+    '.md',
+    '.html',
+    '.css',
+    '.scss',
+    '.less',
+    '.vue',
+    '.py',
+    '.java',
+    '.c',
+    '.cpp',
+    '.h',
+    '.hpp',
+    '.cs',
+    '.go',
+    '.rs',
+    '.rb',
+    '.php',
+    '.sh',
+    '.bash',
+    '.zsh',
+    '.ps1',
+    '.bat',
+    '.cmd',
+    '.sql',
+    '.pl',
+    '.perl',
+    '.r'
+  ]
+  if (codeExtensions.some((ext) => keyLowered.endsWith(ext))) {
+    return defineAsyncComponent(() => import('./previews/CodePreview.vue'))
+  }
+
+  const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.svg']
+  if (imageExtensions.some((ext) => keyLowered.endsWith(ext))) {
+    return defineAsyncComponent(() => import('./previews/ImagePreview.vue'))
+  }
+
+  const videoExtensions = ['.mp4', '.webm', '.ogg', '.avi', '.mov', '.flv', '.wmv']
+  if (videoExtensions.some((ext) => keyLowered.endsWith(ext))) {
+    return defineAsyncComponent(() => import('./previews/VideoPreview.vue'))
+  }
+
+  if (keyLowered.endsWith('.pdf')) {
+    return defineAsyncComponent(() => import('./previews/PDFPreview.vue'))
   }
 
   const contentType = objectInfo?.value?.ContentType ?? ''
