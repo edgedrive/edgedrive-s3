@@ -37,6 +37,10 @@ const { head: objectInfo, evaluating: infoEvaluating } = useObjectHead(client, b
 const { url, evaluating } = useObjectPresignedUrl(client, bucket, object, 3600)
 
 const previewComponent = computed<Component>(() => {
+  if (object.value?.Key?.toLowerCase()?.endsWith('.epub')) {
+    return defineAsyncComponent(() => import('./previews/EPUBPreview.vue'))
+  }
+
   const contentType = objectInfo?.value?.ContentType ?? ''
   if (contentType.includes('officedocument')) {
     return defineAsyncComponent(() => import('./previews/OfficePreview.vue'))
