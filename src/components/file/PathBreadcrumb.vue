@@ -1,9 +1,9 @@
 <template>
   <n-breadcrumb>
     <n-breadcrumb-item @click="resetStorage">
-    <n-icon>
-      <Home16Regular />
-    </n-icon>
+      <n-icon>
+        <Home16Regular />
+      </n-icon>
     </n-breadcrumb-item>
     <n-breadcrumb-item v-if="storage">
       <n-dropdown :options="storageOptions" @select="handleStorageChange">
