@@ -20,7 +20,8 @@ export const useConfigStore = defineStore({
   state: () => ({
     config: useStorage<Config>('edgedrive:config', {
       storages: []
-    }) as Ref<Config>
+    }) as Ref<Config>,
+    showConfigModal: false
   }),
   actions: {
     addStorage() {
