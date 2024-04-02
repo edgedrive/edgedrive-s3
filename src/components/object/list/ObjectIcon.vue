@@ -1,5 +1,5 @@
 <template>
-  <n-icon :component="icon" />
+  <n-icon :component="icon" class="object-icon" />
 </template>
 
 <script setup lang="ts">
@@ -53,3 +53,9 @@ const icon = computed(() => {
   return Document16Regular
 })
 </script>
+
+<style scoped>
+.object-icon {
+  font-size: 1.25em;
+}
+</style>

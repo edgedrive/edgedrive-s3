@@ -1,12 +1,14 @@
 <template>
   <n-list-item @click="showPreview">
     <template #prefix>
-      <ObjectIcon :object="object" />
+      <div style="display: flex">
+        <ObjectIcon :object="object" />
+      </div>
     </template>
     <n-text>{{ filename }}</n-text>
     <template #suffix>
       <n-flex :wrap="false">
-        <span style="white-space: nowrap;">{{ filesizeFormatted }}</span>
+        <span style="white-space: nowrap">{{ filesizeFormatted }}</span>
       </n-flex>
     </template>
   </n-list-item>

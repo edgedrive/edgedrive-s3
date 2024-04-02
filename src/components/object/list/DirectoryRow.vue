@@ -1,9 +1,9 @@
 <template>
   <n-list-item @click="emit('update:prefix', directory)">
     <template #prefix>
-      <n-icon>
-        <Folder16Regular />
-      </n-icon>
+      <div style="display: flex">
+        <n-icon :component="Folder16Regular" class="directory-icon"> </n-icon>
+      </div>
     </template>
     <n-text>{{ directoryName }}</n-text>
   </n-list-item>
@@ -25,3 +25,9 @@ const directoryName = computed(() => {
   return props.directory.split('/').filter(Boolean).pop()
 })
 </script>
+
+<style scoped>
+.directory-icon {
+  font-size: 1.25em;
+}
+</style>
