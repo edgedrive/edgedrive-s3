@@ -24,6 +24,7 @@ import RefreshButton from './refresh/RefreshButton.vue'
 import type { StorageConfig } from '@/stores/config'
 import { useVModels } from '@vueuse/core'
 import { toRef } from 'vue'
+import { useLoadingBar } from 'naive-ui'
 
 const objects = ref<_Object[]>([])
 const directorys = ref<string[]>([])
@@ -31,6 +32,8 @@ const infoModalObject = ref<_Object | undefined>()
 const infoModalShow = ref(false)
 const previewModalObject = ref<_Object | undefined>()
 const previewModalShow = ref(false)
+
+const loadingBar = useLoadingBar()
 
 const props = defineProps<{
   storage: StorageConfig
@@ -60,6 +63,8 @@ provide('previewModalObject', previewModalObject)
 provide('previewModalShow', previewModalShow)
 
 async function updateObjects() {
+  loadingBar.start()
+
   const command = new ListObjectsV2Command({
     Bucket: props.bucket,
     Prefix: prefix.value,
@@ -79,6 +84,8 @@ async function updateObjects() {
   } else {
     directorys.value = []
   }
+
+  loadingBar.finish()
 }
 
 onMounted(() => {
