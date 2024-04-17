@@ -23,6 +23,9 @@ export const useConfigStore = defineStore({
     }) as Ref<Config>,
     showConfigModal: false
   }),
+  getters: {
+    noConfig: (state) => state.config.storages.length === 0
+  },
   actions: {
     addStorage() {
       const defaultStorageConfig: StorageConfig = {

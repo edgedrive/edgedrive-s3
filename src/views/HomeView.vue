@@ -5,6 +5,7 @@ import FileView from '@/components/file/FileView.vue'
 import ConfigModal from '@/components/config/ConfigModal.vue'
 import { NH1, NDivider } from 'naive-ui'
 import ShowConfigModalButton from '@/components/config/ShowConfigModalButton.vue'
+import NoConfigView from '@/components/config/NoConfigView.vue'
 
 const configStore = useConfigStore()
 
@@ -22,7 +23,8 @@ const bucket = ref<string | undefined>(configStore.config.storages?.[0]?.buckets
     </div>
     <n-divider></n-divider>
 
-    <FileView v-model:storage="storage" v-model:bucket="bucket" />
+    <NoConfigView v-if="configStore.noConfig" />
+    <FileView v-model:storage="storage" v-model:bucket="bucket" v-else />
     <ConfigModal />
   </main>
 </template>
