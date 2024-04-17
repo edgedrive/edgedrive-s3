@@ -102,6 +102,10 @@ const previewComponent = computed<Component>(() => {
     return defineAsyncComponent(() => import('./previews/PDFPreview.vue'))
   }
 
+  if (keyLowered.endsWith('.torrent')) {
+    return defineAsyncComponent(() => import('./previews/TorrentPreview.vue'))
+  }
+
   const contentType = objectInfo?.value?.ContentType ?? ''
   if (contentType.includes('officedocument')) {
     return defineAsyncComponent(() => import('./previews/OfficePreview.vue'))
