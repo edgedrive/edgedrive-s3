@@ -8,6 +8,11 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView
+    },
+    {
+      path: '/wiki/storage',
+      name: 'wiki-storage',
+      component: () => import('../views/WikiStorageView.vue')
     }
   ]
 })
