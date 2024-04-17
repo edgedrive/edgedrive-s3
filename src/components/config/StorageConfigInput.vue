@@ -10,7 +10,7 @@
       <n-input v-model:value="config.accessKeyId" />
     </n-form-item>
     <n-form-item label="Secret Access Key">
-      <n-input v-model:value="config.secretAccessKey" />
+      <n-input v-model:value="config.secretAccessKey" type="password" show-password-on="click" />
     </n-form-item>
     <n-form-item label="Bucket">
       <n-dynamic-tags v-model:value="config.buckets" />
