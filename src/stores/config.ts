@@ -46,6 +46,16 @@ export const useConfigStore = defineStore({
       if (index !== -1) {
         this.config.storages.splice(index, 1)
       }
+    },
+    addDemoStorage() {
+      this.config.storages.push({
+        id: crypto.randomUUID(),
+        name: 'Demo Storage',
+        endpoint: 'https://d7f973ebf9677bdfa325d3d1a263e6e9.r2.cloudflarestorage.com',
+        buckets: ['edgedrive-demo'],
+        accessKeyId: '07c186ed55cb614700de6a37d2cc8d1c',
+        secretAccessKey: 'aeeda12a3cc3dec6be8bcf915bc4b6fc873257547527835090599995804c1a2c'
+      })
     }
   }
 })

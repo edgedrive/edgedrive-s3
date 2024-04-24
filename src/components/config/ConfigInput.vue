@@ -2,7 +2,12 @@
 import { useConfigStore } from '@/stores/config'
 import StorageConfigInput from './StorageConfigInput.vue'
 import { NButton, NP, NH2, NCollapse, NCollapseItem, NIcon, NFlex } from 'naive-ui'
-import { Delete16Regular, AddCircle16Regular, QuestionCircle16Regular } from '@vicons/fluent'
+import {
+  Delete16Regular,
+  AddCircle16Regular,
+  QuestionCircle16Regular,
+  Icons20Regular
+} from '@vicons/fluent'
 
 const configStore = useConfigStore()
 </script>
@@ -56,6 +61,12 @@ const configStore = useConfigStore()
             How to Add a Storage?
           </n-button>
         </router-link>
+        <n-button text @click="configStore.addDemoStorage">
+          <template #icon>
+            <n-icon><Icons20Regular /></n-icon>
+          </template>
+          Use Demo Storage
+        </n-button>
       </n-flex>
     </n-p>
   </div>
